@@ -10,7 +10,7 @@ bl_info = {
 }
 
 import bpy
-from bpy.types import Menu
+from bpy.types import Header, Menu, Panel
 
 class Urf_pie(Menu):
     # label is displayed at the center of the pie menu.
@@ -45,7 +45,7 @@ class Urf_pie(Menu):
         col.prop(gpl, "line_width", slider=True)
         # col.prop(gpl, "use_volumetric_strokes")
         col.prop(gpl, "use_onion_skinning")
-
+        
         # N - Active Layer
         # XXX: this should show an operator to change the active layer instead
         col = pie.column()
@@ -56,12 +56,36 @@ class Urf_pie(Menu):
         row.prop(gpl, "lock")
         row.prop(gpl, "hide")
         
-        pie.operator("gpencil.layer_remove", icon='ZOOMOUT', text="Layer")
-        pie.operator("gpencil.layer_add", icon='ZOOMIN', text="Layer")
-        pie.operator("screen.animation_play", text="Play", icon='PLAY')
-        pie.prop(context.scene, "frame_current", text="Frame")
+        #NW - Add/Remove Layers
         
+        col = pie.column()
+        col.label("Rem/Add/Dupl Layer")
+        row = col.row()
+        row.operator("gpencil.layer_remove", icon='ZOOMOUT', text=" ")
+        row.operator("gpencil.layer_add", icon='ZOOMIN', text=" ")
+        row.operator("gpencil.layer_duplicate", icon='COPY_ID', text=" ")
         
+        #NE - Keyframes
+        
+        col = pie.column()
+        col.label("Keyframes")
+        row = col.row()
+        row.operator("screen.keyframe_jump", text=" ", icon='PREV_KEYFRAME').next = False
+        row.operator("screen.animation_play", text=" ", icon='PLAY')
+        row.operator("screen.keyframe_jump", text=" ", icon='NEXT_KEYFRAME').next = True
+        
+        #SE - Select linked vertices
+        col = pie.column()
+        col.label("Select Linked")
+        row = col.row()
+        row.operator("gpencil.select_linked", icon='PARTICLE_POINT', text=" ")
+        
+        #SW - Timeline
+        col = pie.column()
+        col.label("Timeline")
+        row = col.row()
+        row.prop(context.scene, "frame_current", text="Frame")
+         
         
 def register():
     bpy.utils.register_class(Urf_pie)
