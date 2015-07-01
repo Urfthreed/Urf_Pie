@@ -15,3 +15,5 @@ Going clockwise from the top
 6) Fill color and opacity
 7) Stroke color and opacity
 8) Remove current layer, Add a layer, Duplicate a layer
+
+Work in progress...
