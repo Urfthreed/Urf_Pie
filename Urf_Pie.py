@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Urf_Pie",
     "author": "Urf",
-    "version": (0, 1),
+    "version": (0, 2,),
     "blender": (2, 74, 1),
     "description": "Grease Pencil Animation Pie Menu",
     "warning": "",
@@ -34,19 +34,19 @@ class Urf_pie(Menu):
         col.prop(gpl, "color", text="")
         col.prop(gpl, "alpha", text="", slider=True)
         
-        # E - Fill draw settings
-        col = pie.column(align=True)
-        col.label(text="Fill")
-        col.prop(gpl, "fill_color", text="")
-        col.prop(gpl, "fill_alpha", text="", slider=True)
-
-        # S - Layer settings
+        #E - Frame Fwd
+        col = pie.column()
+        col.label("Frame Fwd x 2")
+        row = col.row()
+        row.operator("screen.frame_offset", icon="TRIA_RIGHT", text=" ").delta=2
+        
+        #S - Layer settings
         col = pie.column()
         col.prop(gpl, "line_width", slider=True)
         # col.prop(gpl, "use_volumetric_strokes")
         col.prop(gpl, "use_onion_skinning")
         
-        # N - Active Layer
+        #N - Active Layer
         # XXX: this should show an operator to change the active layer instead
         col = pie.column()
         col.label("Active Layer:      ")
@@ -74,12 +74,12 @@ class Urf_pie(Menu):
         row.operator("screen.animation_play", text=" ", icon='PLAY')
         row.operator("screen.keyframe_jump", text=" ", icon='NEXT_KEYFRAME').next = True
         
-        #SE - Select linked vertices
-        col = pie.column()
-        col.label("Select Linked")
-        row = col.row()
-        row.operator("gpencil.select_linked", icon='PARTICLE_POINT', text=" ")
-        
+        #SE - Fill draw settings
+        col = pie.column(align=True)
+        col.label(text="Fill")
+        col.prop(gpl, "fill_color", text="")
+        col.prop(gpl, "fill_alpha", text="", slider=True)
+                
         #SW - Timeline
         col = pie.column()
         col.label("Timeline")
